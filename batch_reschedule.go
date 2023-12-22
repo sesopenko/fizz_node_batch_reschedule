@@ -12,7 +12,6 @@ import (
 
 func main() {
 	args := os.Args[1:]
-	fmt.Println(args)
 	skippedFrames := 0
 	if len(args) > 0 {
 		parsedSkip, err := strconv.Atoi(args[0])
@@ -21,6 +20,7 @@ func main() {
 		}
 		skippedFrames = parsedSkip
 	}
+	fmt.Printf("Skipping %d frames\n", skippedFrames)
 	schedules := []string{
 		"a.txt",
 		"b.txt",
@@ -30,6 +30,7 @@ func main() {
 	}
 	for _, filePath := range schedules {
 		scheduleBatch(skippedFrames, filePath)
+		fmt.Printf("Wrote %s\n", filePath)
 	}
 
 }
