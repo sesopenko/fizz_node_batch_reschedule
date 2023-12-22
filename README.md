@@ -1,6 +1,6 @@
-# sesopenko/batch_reschedule
+# sesopenko/fizz_node_batch_reschedule
 
-Reschedules a batch of keyframe directives used by [FizzNodes](https://github.com/FizzleDorf/ComfyUI_FizzNodes).
+Reschedules a batch of keyframe directives used by [ComfyUI FizzNodes](https://github.com/FizzleDorf/ComfyUI_FizzNodes).
 
 When skipping frames in an animation, the key frames have to be rescheduled based on the number of key frames skipped.
 
