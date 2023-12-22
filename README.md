@@ -14,7 +14,7 @@ From windows terminal:
 
 ```bat
 REM build project
-go build
+go build -o batch_reschedule.exe
 REM copy all example files
 prep.bat
 REM run program and skip 120 frames
