@@ -6,9 +6,11 @@ When skipping frames in an animation, the key frames have to be rescheduled base
 
 ## Requirements
 
-* go 1.21
+* [go 1.21](https://go.dev/doc/install)
 
 ## Usage (Windows):
+
+From windows terminal:
 
 ```bat
 REM build project
@@ -18,6 +20,10 @@ prep.bat
 REM run program and skip 120 frames
 batch_reschedule 120
 ```
+
+### Linux support
+
+Theoretically this should work on linux if you build it with similar steps. See what [prep.bat](prep.bat) is doing.
 
 ## License
 
