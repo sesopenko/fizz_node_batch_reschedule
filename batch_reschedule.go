@@ -73,6 +73,9 @@ func scheduleBatch(skippedFrames int, filePath string) {
 		}
 		finalLines = append(finalLines, fmt.Sprintf(`"%d":%s`, adjustedKeyframe, matches[2]))
 	}
+	if firstLine != "" && len(finalLines) == 0 {
+		finalLines = append(finalLines, firstLine)
+	}
 	joined := strings.Join(finalLines, newLine)
 
 	writeJoinedLines(filePath, joined)
