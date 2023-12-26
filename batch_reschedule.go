@@ -26,16 +26,16 @@ func main() {
 		"b.txt",
 		"c.txt",
 		"d.txt",
-		"main_sched.txt",
 	}
 	for _, filePath := range schedules {
-		scheduleBatch(skippedFrames, filePath)
+		scheduleBatch(skippedFrames, filePath, false)
 		fmt.Printf("Wrote %s\n", filePath)
 	}
+	scheduleBatch(skippedFrames, "main_sched.txt", true)
 
 }
 
-func scheduleBatch(skippedFrames int, filePath string) {
+func scheduleBatch(skippedFrames int, filePath string, quoteFrame bool) {
 	newLine := "\r\n"
 	if runtime.GOOS != "windows" {
 		newLine = "\n"
@@ -52,6 +52,10 @@ func scheduleBatch(skippedFrames int, filePath string) {
 	re := regexp.MustCompile(regexPattern)
 	finalLines := []string{}
 	firstLine := ""
+	firstFrame := "0"
+	if quoteFrame {
+		firstFrame = "\"" + firstFrame + "\""
+	}
 	for _, line := range mainLines {
 		matches := re.FindStringSubmatch(line)
 		if len(matches) == 0 {
@@ -59,10 +63,14 @@ func scheduleBatch(skippedFrames int, filePath string) {
 		}
 		keyFrame, _ := strconv.Atoi(matches[1])
 		adjustedKeyframe := keyFrame - skippedFrames
+		frameString := fmt.Sprintf("%d", adjustedKeyframe)
+		if quoteFrame {
+			frameString = fmt.Sprintf("\"%s\"", frameString)
+		}
 
 		if keyFrame < skippedFrames {
 			if len(finalLines) == 0 {
-				firstLine = fmt.Sprintf(`"%d":%s`, 0, matches[2])
+				firstLine = fmt.Sprintf(`%s:%s`, firstFrame, matches[2])
 			}
 			continue
 		} else {
@@ -71,7 +79,7 @@ func scheduleBatch(skippedFrames int, filePath string) {
 				firstLine = ""
 			}
 		}
-		finalLines = append(finalLines, fmt.Sprintf(`"%d":%s`, adjustedKeyframe, matches[2]))
+		finalLines = append(finalLines, fmt.Sprintf(`%s:%s`, frameString, matches[2]))
 	}
 	if firstLine != "" && len(finalLines) == 0 {
 		finalLines = append(finalLines, firstLine)
